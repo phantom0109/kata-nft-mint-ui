@@ -40,16 +40,14 @@ body {
 }
 
 .skew-btn{
-  transform: skew(-20deg) !important;
+
   background: #FE0565;
   border-color: #FE0565;
   color: white;
   font-size: 20px;
   font-weight: bold;
   min-width: 15%;
-  .content{
-    transform: skew(0deg) !important;
-  }
+
 }
 .skew-btn:hover {
   background-color: #FE0565 !important;
