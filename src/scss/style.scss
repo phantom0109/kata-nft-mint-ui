@@ -1,0 +1,155 @@
+body {
+  background-color:#0d0512;
+}
+
+.landing{
+  text-align: center;
+}
+
+.upper-text{
+    font-weight: bold;
+    color: white;
+    span{
+      display: inline-block;
+      color: #FE0565;
+    }
+}
+
+.upper-text1{
+  color: white;
+  span{
+    display: inline-block;
+    color: #FE0565;
+  }
+}
+
+.progress-bar {
+  background-color: #524347;
+  border-radius: 25px;
+  max-width: 300px;
+  margin:auto;
+  .bar {
+    background-color: #FE0565;
+    border-radius: 25px;
+    height: 15px;
+  }
+}
+
+.mint-goal{
+  color: #FE0565;
+}
+
+.skew-btn{
+  transform: skew(-20deg) !important;
+  background: #FE0565;
+  border-color: #FE0565;
+  color: white;
+  font-size: 20px;
+  font-weight: bold;
+  min-width: 15%;
+  .content{
+    transform: skew(0deg) !important;
+  }
+}
+.skew-btn:hover {
+  background-color: #FE0565 !important;
+  border-color: #FE0565;
+  color: white !important;
+}
+.skew-btn:active {
+  background-color: #FE0565 !important;
+  border-color: #FE0565;
+  color: white !important;
+}
+.skew-btn:checked {
+  background-color: #FE0565 !important;
+  border-color: #FE0565;
+  color: white !important;
+}
+
+.skew-btn:focus{
+  background-color: #FE0565 !important;
+  border-color: #FE0565;
+  color: white !important;
+}
+
+.katana-mint{
+  margin:auto;
+}
+
+.custom_input {
+  background-color: #524347;
+  color: white !important;
+  font-weight: bold;
+  border: none;
+  text-align: right;
+  border-radius: 10px;
+  max-width: 300px;
+  margin: auto;
+}
+.custom_input:focus{
+  background-color: #524347;
+  border: none;
+  border-radius: 10px;
+}
+
+.mint-btn{
+  padding-left: 35px;
+  padding-right: 35px;
+  background-color: #FE0565 !important;
+  border-color: #FE0565;
+  color: white !important;
+}
+.mint-btn:focus {
+  padding-left: 35px;
+  padding-right: 35px;
+  background-color: #FE0565 !important;
+  border-color: #FE0565;
+  color: white !important;
+}
+.mint-btn:active{
+  padding-left: 35px;
+  padding-right: 35px;
+  background-color: #FE0565 !important;
+  border-color: #FE0565;
+  color: white !important;
+}
+.mint-btn:hover{
+  padding-left: 35px;
+  padding-right: 35px;
+  background-color: #FE0565 !important;
+  border-color: #FE0565;
+  color: white !important;
+}
+.mint-btn:checked{
+  padding-left: 35px;
+  padding-right: 35px;
+  background-color: #FE0565 !important;
+  border-color: #FE0565;
+  color: white !important;
+}
+.mint-range{
+  color:rgb(85, 85, 85);
+}
+
+.page-loading{
+  min-height: calc(100vh - 170px);
+  text-align: center;
+}
+
+.mint-loading {
+  text-align: center;
+}
+
+.ethAmount{
+  color:rgb(85, 85, 85);
+}
+
+.calcEth{
+  text-align: left;
+}
+
+.mint-section{
+  max-width: 300px;
+  margin: auto;
+}

@@ -1,0 +1,35 @@
+.kata-header {
+  background-color: #171319;
+  width: 100%;
+  position: sticky;
+  top: 0px;
+  z-index: 5;
+  &__logo {
+    height: 55px;
+    margin:15px 15px 15px 70px;
+  }
+
+  &__link{
+    margin: 10px;
+    color: white;
+  }
+
+  &__connect-wallet-btn{
+    border-radius: 25px;
+    border-width: 1px;
+    border-color: #FE0565;
+    background-color: transparent;
+    color: #FE0565;
+  }
+  
+  &__connect-wallet-btn:hover, &__connect-wallet-btn:active, &__connect-wallet-btn:checked {
+    background-color: #FE0565 !important;
+    border-color: #FE0565;
+    color: white !important;
+  }
+  
+  &__wallet-icon {
+    margin-right: 10px;
+  }
+}
+  
