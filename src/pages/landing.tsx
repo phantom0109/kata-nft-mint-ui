@@ -5,7 +5,7 @@ import { Web3ModalContext } from "contexts/Web3ModalProvider";
 import { NotificationManager } from 'react-notifications';
 import { useEffect, useContext, useCallback, useState } from 'react';
 import useMintData from "hooks/useMintData";
-import { toFixed, getPercent } from "blockchain/utils";
+import { toFixed, getPercent, getDateStr } from "blockchain/utils";
 import useAccountData from 'hooks/useAccountData';
 import {Web3WrapperContext} from "contexts/Web3WrapperProvider";
 import LoaderSpinner from "react-loader-spinner";
@@ -36,43 +36,43 @@ const Landing = () => {
     connect();
   }, [connect]);
 
-  const handleMaxClick = () => {
+  const handleMaxClick = useCallback(() => {
     if (!mintRequested && accountData)
       setAmount(MintData.maxMintAmount)
-  }
+  }, [MintData, mintRequested, accountData]);
 
-  const CalcETHAmount = () => {
+  const CalcETHAmount = useCallback(() => {
     return Number(MintData.NFTPrice) * Number(Amount); 
-  }
+  }, [MintData, Amount]);
 
-  const Mint = async () => {
-    if (mintRequested || !accountData || !MintData) return;
+  const handleMint = async () => {
+    if (mintRequested || !accountData || !MintData || !wrapper) return;
     if (Amount === "" || isNaN(Number(Amount)) || Number(Amount) <= 0) {
       NotificationManager.error("Invalid amount.");
       return;
     }
-    if (Number(Amount) > Number(MintData.maxMintAmount)) {
-      NotificationManager.error(`Maximum Mint fund is ${MintData.maxMintAmount}`);
+    if (Number(Amount) + Number(accountData.balance) > Number(MintData.maxMintAmount)) {
+      NotificationManager.error(`Maximum mint amount is ${MintData.maxMintAmount}`);
       return;
     }
     if (Number(Amount) * Number(MintData.NFTPrice) > Number(accountData.ethBalance)) {
       NotificationManager.error("Insufficient ETH balance.");
       return;
     }
-    const left = (Number(MintData.maxSupply) - Number(MintData.mintSupply));
+    const left = (Number(MintData.maxSupply) - Number(MintData.totalSupply));
     if (Number(Amount) > left) {
-      NotificationManager.error(``);
+      NotificationManager.error("Exceeds max supply");
       return;
     }
     setBuyReqeusted(true);
-    const txHash = await wrapper?.mint(Amount,Number(MintData.NFTPrice));
+    const txHash = await wrapper.mint(Amount,Number(MintData.NFTPrice));
     setBuyReqeusted(false);
     if (!txHash) {
       NotificationManager.error('Mint Transaction Error');
       return;
     }
     
-    NotificationManager.success(`${Amount} Minted`, 'Mint Success');
+    NotificationManager.success(`${Amount} NFTs minted`, 'Mint Success');
     setAmount("0");
 
   }
@@ -82,12 +82,12 @@ const Landing = () => {
         !MintData ? 
         (
           <div className='page-loading'>
-              <LoaderSpinner
-                type="ThreeDots"
-                color="#FE0565"
-                height={100}
-                width={100}
-              />
+            <LoaderSpinner
+              type="ThreeDots"
+              color="#FE0565"
+              height={100}
+              width={100}
+            />
           </div>
         )
         :
@@ -115,53 +115,60 @@ const Landing = () => {
                 </div>
               ):(
                 <div className="mint-section mt-4">
-                  {accountData ? 
+                  {(MintData.status === 0 && !accountData.isWhitelist) ?
                     (
-                      
-                      <div className="mint-range d-flex justify-content-between">
-                        <h6 className="mintedAmount">
-                          Balance: {accountData.balance}
-                        </h6>
-                        <h6 className="maxMintAmount"
-                          onClick={handleMaxClick}
-                          style={{ cursor: mintRequested?"auto":"pointer" }}
-                        >
-                          Max: {MintData.maxMintAmount}
-                        </h6>
-                      </div>
-
-                    ) 
-                    : 
-                    (
-                      <div className="mint-loading">
-                        <LoaderSpinner
-                          type="ThreeDots"
-                          color="#FE0565"
-                          height={50}
-                          width={50}                        
-                        />
+                      <div className="text-white">
+                        <h2>You can Mint from</h2>
+                        <h3>{getDateStr(MintData.whitelistTime)}</h3>
                       </div>
                     )
+                    :
+                    (
+                      accountData ?
+                      (<>
+                        <div className="mint-range d-flex justify-content-between">
+                          <h6 className="mintedAmount">
+                            Balance: {accountData.balance}
+                          </h6>
+                          <h6 className="maxMintAmount"
+                            onClick={handleMaxClick}
+                            style={{ cursor: mintRequested?"auto":"pointer" }}
+                          >
+                            Max: {MintData.maxMintAmount}
+                          </h6>
+                        </div>
+                        <Form.Control 
+                          type="number" 
+                          className="custom_input"
+                          onChange={handleChange}
+                          value={Amount}
+                          disabled={mintRequested}
+                        />
+    
+                        <div className="ethAmount mt-2">
+                          <h6 className="calcEth">
+                            ={CalcETHAmount()} ETH
+                          </h6>        
+                        </div>
+                        <div className="mt-3">
+                          <Button className="mint-btn" onClick={handleMint} disabled={mintRequested}>
+                            { mintRequested?"Minting...":"Mint" }
+                          </Button>
+                        </div>
+                      </>
+                      ) : 
+                      (
+                        <div className="mint-loading">
+                          <LoaderSpinner
+                            type="ThreeDots"
+                            color="#FE0565"
+                            height={50}
+                            width={50}                        
+                          />
+                        </div>
+                      )                    
+                    ) 
                   }
-                  
-                  <Form.Control 
-                    type="number" 
-                    className="custom_input"
-                    onChange={handleChange}
-                    value={Amount}
-                    disabled={mintRequested}
-                  />
-
-                  <div className="ethAmount mt-2">
-                    <h6 className="calcEth">
-                      ={CalcETHAmount()} ETH
-                    </h6>        
-                  </div>
-                  <div className="mt-3">
-                    <Button className="mint-btn" onClick={Mint}  disabled={mintRequested}>
-                      { mintRequested?"Minting...":"Mint" }
-                    </Button>
-                  </div>
                 </div>
               )
             }
@@ -175,7 +182,7 @@ const Landing = () => {
 
             <div className="mt-4">
               <h4 className="font-weight-bold text-white">Minted NFTs: {percent}%</h4>
-              <h3 className="mint-goal font-weight-bold">{toFixed(MintData.mintSupply, 4)} / {toFixed(MintData.maxSupply, 4)}</h3>  
+              <h3 className="mint-goal font-weight-bold">{toFixed(MintData.totalSupply, 4)} / {toFixed(MintData.maxSupply, 4)}</h3>  
             </div>
           
             <div className="mt-5">
@@ -195,7 +202,7 @@ const Landing = () => {
             </div>
             <div className="text-white mt-4 mb-4">
               <h6>
-                We have set the gas limit to 285000 for the contract to succesfully mint your NFT.We recommend that you don't
+                We have set the gas limit to 285000 for the contract to succesfully mint your NFT. We recommend that you don't
                 <br />
                 lower the gas limit
               </h6>

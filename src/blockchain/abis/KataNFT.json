@@ -1,6 +1,12 @@
 [
   {
-    "inputs": [],
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_whitelistTime",
+        "type": "uint256"
+      }
+    ],
     "stateMutability": "nonpayable",
     "type": "constructor"
   },
@@ -224,20 +230,6 @@
   {
     "inputs": [],
     "name": "maxSupply",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function",
-    "constant": true
-  },
-  {
-    "inputs": [],
-    "name": "mintSupply",
     "outputs": [
       {
         "internalType": "uint256",
@@ -512,6 +504,20 @@
   },
   {
     "inputs": [],
+    "name": "whitelistTime",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function",
+    "constant": true
+  },
+  {
+    "inputs": [],
     "name": "pause",
     "outputs": [],
     "stateMutability": "nonpayable",
@@ -541,7 +547,7 @@
     "inputs": [
       {
         "internalType": "uint256",
-        "name": "Amount",
+        "name": "amount",
         "type": "uint256"
       }
     ],
@@ -606,7 +612,7 @@
         "type": "uint256"
       }
     ],
-    "name": "setMaxsupply",
+    "name": "setMaxSupply",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -659,6 +665,32 @@
       }
     ],
     "name": "setBaseExt",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address[]",
+        "name": "addrs",
+        "type": "address[]"
+      }
+    ],
+    "name": "registerWhitelist",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_whitelistTime",
+        "type": "uint256"
+      }
+    ],
+    "name": "setWhitelistTime",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"

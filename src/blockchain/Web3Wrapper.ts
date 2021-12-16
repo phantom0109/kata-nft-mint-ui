@@ -2,6 +2,7 @@ import Web3 from 'web3';
 import  KataNFT from "./contracts/KataNFT";
 import { addresses } from './constants';
 import { BntoNum, NumToBn } from './utils';
+import { whitelist } from './whitelist';
 
 export default class Web3Wrapper {
     web3: Web3;
@@ -26,10 +27,14 @@ export default class Web3Wrapper {
         
         const ethBalacne = await this.web3.eth.getBalance(this.account);
         const balance = await this.PreMint.call("balanceOf", this.account);
-        
+        // const isWhitelist = await this.PreMint.call("whitelist", this.account);
+
+        const result = whitelist.find(addr => this.web3.utils.toChecksumAddress(addr) === this.account);
         return { 
             ethBalance: BntoNum(ethBalacne, 18),
-            balance : Number(balance)
+            balance : Number(balance),
+            // isWhitelist: Boolean(isWhitelist)
+            isWhitelist: (result !== undefined)
         }
     }  
     async mint(amount,price) {
