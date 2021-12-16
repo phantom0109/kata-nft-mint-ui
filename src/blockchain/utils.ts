@@ -3,7 +3,7 @@ import { addresses, defaultChainId, rpcUrls } from './constants';
 import { BigNumber } from "bignumber.js";
 import KataNFT from './contracts/KataNFT';
 import moment from "moment";
-import { useState } from 'react';
+// import { useState } from 'react';
 
 export const createWeb3 = (provider) => {
 
@@ -69,15 +69,6 @@ export const getDateStr = (tiemstamp) => {
   return output;
 }
 
-export const getTargetTime = (MintData) => {
-  if (!MintData) return {};
-
-  if (MintData.status === 1)
-    return { targetTime: MintData.endTime, timerTitle: "Presale is Live" };
-
-  return {};
-}
-
 export const getPreMintData = async () => {
   const premint = new KataNFT(getDefaultContractOptions(), addresses.PreMint[defaultChainId]);
 
@@ -87,7 +78,7 @@ export const getPreMintData = async () => {
   const maxMintAmount = await premint.call("maxMintAmount");
   // const whitelistTime = Number(await premint.call("whitelistTime"));
 
-  const whitelistTime = 16395910900;
+  const whitelistTime = 1639498981;
   let currentTime = moment().unix();
   let status = 0;
 

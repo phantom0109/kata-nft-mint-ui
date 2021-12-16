@@ -127,7 +127,7 @@ const Landing = () => {
                      </div>
                     ) : (
                       
-                    (MintData.status == 0 && !accountData.isWhitelist) ?
+                    (MintData.status === 0 && !accountData.isWhitelist) ?
                     (
                       <div className="whitelistTime">
                         <h2>You can Mint from</h2>

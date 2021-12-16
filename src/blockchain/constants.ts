@@ -14,7 +14,7 @@ export const networkNames = {
 
 export const addresses = {
   PreMint: {
-    4: '0x4Ae58AAeb885dEb5C15d28Fc0D478F6Ff6768726',
+    4: '0x5e5357e439De92d5d718a25176D44311cF566fd3',
   },
 }
 
