@@ -115,7 +115,19 @@ const Landing = () => {
                 </div>
               ):(
                 <div className="mint-section mt-4">
-                  {(MintData.status === 0 && !accountData.isWhitelist) ?
+                  {
+                    !accountData ? (
+                      <div className="mint-loading">
+                        <LoaderSpinner
+                          type="ThreeDots"
+                          color="#FE0565"
+                          height={50}
+                          width={50}                        
+                        />
+                     </div>
+                    ) : (
+                      
+                    (MintData.status == 0 && !accountData.isWhitelist) ?
                     (
                       <div className="whitelistTime">
                         <h2>You can Mint from</h2>
@@ -168,6 +180,7 @@ const Landing = () => {
                         </div>
                       )                    
                     ) 
+                    )
                   }
                 </div>
               )
