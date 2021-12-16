@@ -3,6 +3,7 @@ import { addresses, defaultChainId, rpcUrls } from './constants';
 import { BigNumber } from "bignumber.js";
 import KataNFT from './contracts/KataNFT';
 import moment from "moment";
+import { useState } from 'react';
 
 export const createWeb3 = (provider) => {
 
@@ -76,7 +77,6 @@ export const getTargetTime = (MintData) => {
 
   return {};
 }
-
 
 export const getPreMintData = async () => {
   const premint = new KataNFT(getDefaultContractOptions(), addresses.PreMint[defaultChainId]);
